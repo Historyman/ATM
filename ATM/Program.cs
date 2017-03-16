@@ -7,7 +7,7 @@ namespace ATM
         static void Main(string[] args)
         {
             //Load initial data
-            CashDrawer drawer = new CashDrawer();
+            ATM atm = new ATM();
 
             //Weclome Message
             Console.WriteLine("Welcome to Command Line ATM");
@@ -19,7 +19,7 @@ namespace ATM
             Console.WriteLine();
 
             //Display Current Cash Register
-            drawer.DisplayDrawer();
+            atm.DisplayContents();
 
             //Enter Command
             string response = String.Empty;
@@ -32,8 +32,9 @@ namespace ATM
                 {
                     
                     case "R": //Restock
-                        drawer.Restock();
-                        drawer.DisplayDrawer();
+                        atm.Restock();
+                        Console.WriteLine("ATM Restocked");
+                        atm.DisplayContents();
                         break;
                     
                     case "W": //Withdraw
@@ -50,18 +51,18 @@ namespace ATM
                         }
 
                         //Prevent Overdrafting
-                        if (withdrawAmount > drawer.Total)
+                        if (withdrawAmount > atm.Total)
                         {
-                            Console.WriteLine($"Withdrawl amount is more that drawer Total, please enter an amount smaller than {drawer.Total}");
+                            Console.WriteLine($"Withdrawl amount is more that drawer Total, please enter an amount smaller than {atm.Total}");
                             break;
                         }
 
                         //Attempt Withdrawl
-                        var result = drawer.Withdraw(withdrawAmount);
+                        var result = atm.Withdraw(withdrawAmount);
                         if (result.success)
                         {
                             Console.WriteLine($"Success: Dispensed ${result.amount}");
-                            drawer.DisplayDrawer();
+                            atm.DisplayContents();
                         }
                         else
                         {
@@ -75,7 +76,7 @@ namespace ATM
                         {
                             //Use parsed string to find the denomination in the drawer
                             string denominationName = command[i];
-                            int count = drawer.GetDenominationCount(denominationName);
+                            int count = atm.GetDenominationCount(denominationName);
 
                             //If Denomination is not found, alert user
                             if (count == -1)

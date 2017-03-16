@@ -13,7 +13,7 @@ namespace UnitTests
             //arrange
             int withdrawlAmount = 217;
             int expected = 1643;
-            CashDrawer testDrawer = new CashDrawer();
+            ATM.ATM testDrawer = new ATM.ATM();
 
             //act
             testDrawer.Withdraw(withdrawlAmount);
@@ -28,7 +28,7 @@ namespace UnitTests
         {
             //arrange
             int tooMuchMoney = 2000000;
-            CashDrawer testDrawer = new CashDrawer();
+            ATM.ATM testDrawer = new ATM.ATM();
 
             //act
             testDrawer.Withdraw(tooMuchMoney);
@@ -41,7 +41,7 @@ namespace UnitTests
         public void Withdrawl_Will_Use_Smaller_Bills_If_Needed()
         {
             //arrange
-            CashDrawer testDrawer = new CashDrawer();
+            ATM.ATM testDrawer = new ATM.ATM();
 
             //act
             for (int i = 0; i < 6; i++)

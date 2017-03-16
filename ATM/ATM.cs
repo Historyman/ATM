@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace ATM
 {
-    public class CashDrawer
+    public class ATM
     {
         public int Total
         {
@@ -31,14 +31,19 @@ namespace ATM
 
         }
 
+        /// <summary>
+        /// Withdraws the specified amount
+        /// </summary>
+        /// <param name="amount">Amount to Withdraw</param>
+        /// <returns></returns>
         public (bool success, int amount, List<Denomination> contents) Withdraw(int amount)
         {
             //Clone the contents of the drawer to revert changes in case the operation fails
-            List<Denomination> newDrawer = _contents.Select(d => new Denomination(d.Value, d.Quantity)).ToList();
+            List<Denomination> newContents = _contents.Select(d => new Denomination(d.Value, d.Quantity)).ToList();
 
             //Go through each denomination to withdraw in the most efficient way possible
             int amountCheck = amount;
-            foreach (Denomination d in newDrawer)
+            foreach (Denomination d in newContents)
             {
                 //If we can take from this value, do it
                 while (amountCheck >= d.Value && d.Quantity > 0)
@@ -53,7 +58,7 @@ namespace ATM
             if (amountCheck == 0)
             {
                 //replace drawer with new drawer after all transactions succeeded
-                _contents = newDrawer;
+                _contents = newContents;
 
                 //Return result back to main
                 return (true, amount, _contents);
@@ -78,7 +83,7 @@ namespace ATM
         /// <summary>
         /// Writes the Drawer's Contents to the Console
         /// </summary>
-        public void DisplayDrawer()
+        public void DisplayContents()
         {
             Console.WriteLine($"Machine Balance: ${Total}");
             foreach (Denomination d in _contents)
@@ -92,7 +97,7 @@ namespace ATM
         /// <summary>
         /// Default Constructor.  Calls Restock to set up initial amounts
         /// </summary>
-        public CashDrawer()
+        public ATM()
         {
             Restock();
         }
