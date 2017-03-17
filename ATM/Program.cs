@@ -71,7 +71,7 @@ namespace ATM
                         break;
 
                     case "I": //Display Denominations
-                        for (int i = 1; i < command.Length; i++)
+                        for (int i = 1; i < response.Length; i++)
                         {
                             //Use parsed string to find the denomination in the drawer
                             string denominationName = response[i];
