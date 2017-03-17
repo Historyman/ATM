@@ -3,7 +3,7 @@ App is built on .NET Core and requires the .NET Core SDK Found here: https://www
 To create a published release version go to .\ATM and type the following command:
 dotnet publish -c Release
 
-You can run the published program by going to .\ATM\bin\Release\netcoreapp1.1 and typing the following commmand:
+You can run the published program by going to .\ATM\bin\Release\publish\netcoreapp1.1 and typing the following commmand:
 dotnet ATM.dll
 
 If you want to build a self-contained .exe please open a command line in the ATM folder and type the following based on your windows version.
