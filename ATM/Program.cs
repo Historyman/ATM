@@ -11,49 +11,48 @@ namespace ATM
 
             //Weclome Message
             Console.WriteLine("Welcome to Command Line ATM");
-            Console.WriteLine("Available Commands:");
-            Console.WriteLine("R - Restocks Cash Machine to pre-stock levels");
-            Console.WriteLine("W [Amount]  - Withdraws Cash Amount");
-            Console.WriteLine("I [Denomination] - Displays the number of bills in that denomination present in the cash machine");
-            Console.WriteLine("Q - Quit");
-            Console.WriteLine();
+            Console.WriteLine("////////////////////////////");
+            Console.WriteLine("");
+            DisplayCommands();
+
 
             //Display Current Cash Register
             atm.DisplayContents();
 
             //Enter Command
-            string response = String.Empty;
-            while (response != "Q")
+            string command = String.Empty;
+            while (command != "Q")
             {
                 Console.WriteLine("Please Enter a Command");
-                string[] command = Console.ReadLine().ToUpper().Split(' ');
+                string[] response = Console.ReadLine().ToUpper().Split(' ');
+                command = response[0];
 
-                switch (command[0])
+                switch (command)
                 {
-                    
+
                     case "R": //Restock
                         atm.Restock();
                         Console.WriteLine("ATM Restocked");
                         atm.DisplayContents();
                         break;
-                    
+
                     case "W": //Withdraw
                         //convert amount string to int, break if doesnt work
                         int withdrawAmount;
                         try
                         {
-                            withdrawAmount = Convert.ToInt32(command[1].Split('$')[1]);
+                            withdrawAmount = Convert.ToInt32(response[1].Split('$')[1]);
                         }
                         catch (Exception)
                         {
-                            Console.WriteLine("Invalid $ Amount, make sure you Included '$'");
+                            Console.WriteLine("Invalid $ Amount, make sure you ncluded '$'");
                             break;
                         }
 
                         //Prevent Overdrafting
                         if (withdrawAmount > atm.Total)
                         {
-                            Console.WriteLine($"Withdrawl amount is more that drawer Total, please enter an amount smaller than {atm.Total}");
+                            Console.WriteLine($"Withdrawl amount is more than machine total, please enter an amount smaller than ${atm.Total}");
                             break;
                         }
 
@@ -70,12 +69,12 @@ namespace ATM
                         }
 
                         break;
-                  
+
                     case "I": //Display Denominations
                         for (int i = 1; i < command.Length; i++)
                         {
                             //Use parsed string to find the denomination in the drawer
-                            string denominationName = command[i];
+                            string denominationName = response[i];
                             int count = atm.GetDenominationCount(denominationName);
 
                             //If Denomination is not found, alert user
@@ -89,18 +88,36 @@ namespace ATM
                             }
                         }
                         break;
-                        
+
                     case "Q": //Quit
                         Console.WriteLine("Thanks for using the ATM");
                         System.Threading.Thread.Sleep(2000);
                         break;
+
+                    case "H": //Command list (Help)
+                        DisplayCommands();
+                        break;
+
                     default:
                         Console.WriteLine("Invalid Command");
                         break;
                 }
 
             }
+        }
 
+        /// <summary>
+        /// Writes list of commands to the Console
+        /// </summary>
+        static void DisplayCommands()
+        {
+            Console.WriteLine("Available Commands:");
+            Console.WriteLine("R - Restocks Cash Machine to pre-stock levels");
+            Console.WriteLine("W [Amount]  - Withdraws Cash Amount");
+            Console.WriteLine("I [Space Separated List of Denominations] - Displays the current count of bills in for each requested denomination");
+            Console.WriteLine("Q - Quit");
+            Console.WriteLine("H - Display command list");
+            Console.WriteLine();
         }
     }
 }
