@@ -10,7 +10,7 @@ namespace ATM
             ATM atm = new ATM();
 
             //Weclome Message
-            Console.WriteLine("Welcome to Command Line ATM");
+            Console.WriteLine("Welcome to the Command Line ATM");
             Console.WriteLine("////////////////////////////");
             Console.WriteLine("");
             DisplayCommands();
